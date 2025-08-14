@@ -2,7 +2,7 @@
 <html>
 <head>
   <title>Real-World Calculator</title>
-  <link rel="stylesheet" href="/static/style.css?v=1">
+  <link rel="stylesheet" href="/static/style.css?v=2">
 </head>
 <body>
   <div class="calculator">
@@ -30,7 +30,10 @@
       <button onclick="appendValue(' + ')">+</button>
     </div>
 
-    <button id="clear" onclick="clearDisplay()">Clear</button>
+    <div class="extra-buttons">
+      <button id="clear" onclick="clearDisplay()">Clear</button>
+      <button id="backspace" onclick="backspace()">⌫</button>
+    </div>
   </div>
 
   <script>
@@ -40,6 +43,11 @@
 
     function clearDisplay() {
       document.getElementById('display').value = '';
+    }
+
+    function backspace() {
+      let display = document.getElementById('display');
+      display.value = display.value.slice(0, -1);
     }
 
     async function calculate() {
