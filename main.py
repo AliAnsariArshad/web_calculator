@@ -7,11 +7,9 @@ import operator
 
 app = FastAPI()
 
-# Mount static files
 app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="templates")
 
-# Allowed operators
 ops = {
     "+": operator.add,
     "-": operator.sub,
@@ -19,16 +17,13 @@ ops = {
     "/": lambda a, b: a / b if b != 0 else "Cannot divide by zero"
 }
 
-
 @app.get("/", response_class=HTMLResponse)
 async def get_calculator(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
 
-
 @app.get("/calculate")
 async def calculate(expr: str):
     try:
-        # Very simple parser (split by space)
         parts = expr.split()
         if len(parts) != 3:
             return JSONResponse({"result": "Invalid expression"})
